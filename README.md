@@ -1,12 +1,8 @@
 
-# mzek : demagogue
+# mzek
 
-[project homepage] (https://gitlab.com/demagogue/mzek)
+experimental p2p IDS built on ssb.
 
-## notes
+# status
 
-```
-port: 8008
-cap: <random_32_bytes_base64_encoded>
-service: systemd
-```
+come back soon!
