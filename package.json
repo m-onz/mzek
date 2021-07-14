@@ -1,0 +1,33 @@
+{
+  "name": "mzek",
+  "version": "1.0.0",
+  "description": "hedgehog-demagogue",
+  "main": "index.js",
+  "bin": {
+    "mzek": "server.js"
+  },
+  "dependencies": {
+    "scuttle-testbot": "^1.5.2",
+    "ssb-client": "^4.9.0",
+    "ssb-config": "^3.4.5",
+    "ssb-conn": "^4.0.1",
+    "ssb-friends": "^4.4.7",
+    "ssb-gossip": "^1.1.1",
+    "ssb-lan": "^1.0.0",
+    "ssb-master": "^1.0.3",
+    "ssb-private1": "^1.0.1",
+    "ssb-promiscuous": "^1.1.0",
+    "ssb-replicate": "^1.3.3",
+    "ssb-server": "^15.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-onz/mzek.git"
+  },
+  "author": "m-onz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/m-onz/mzek/issues"
+  },
+  "homepage": "https://github.com/m-onz/mzek#readme"
+}

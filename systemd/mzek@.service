@@ -1,0 +1,18 @@
+# Usage:
+#
+# $ sudo systemctl link ./mzek@.service # add to systemd
+# $ sudo systemctl enable mzek@${USER} # set to run as this user, on boot
+# $ sudo systemctl start mzek@${USER} # start now, as this user
+
+[Unit]
+Description=mzek-daemon
+After=network.target
+
+[Service]
+User=%I
+ExecStart=/usr/bin/env bash -c '. /home/%I/.nvm/nvm.sh; mzek'
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
