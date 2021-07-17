@@ -9,6 +9,9 @@ chmod 700 /root
 perl -npe 's/umask\s+0\d2/umask 077/g' -i /etc/bashrc
 perl -npe 's/umask\s+0\d2/umask 077/g' -i /etc/csh.cshrc
 authconfig --passalgo=sha512 --update
+chattr +i /etc/services
+chattr +i /etc/passwd
+chattr +i /etc/shadow
 echo "Idle users will be removed after 15 minutes"
 echo "readonly TMOUT=900" >> /etc/profile.d/os-security.sh
 echo "readonly HISTFILE" >> /etc/profile.d/os-security.sh
@@ -42,6 +45,7 @@ net.ipv4.conf.default.rp_filter = 1
 net.ipv4.tcp_timestamps = 0
 EOF
 
+echo "tcp wrapping"
 echo "ALL:ALL" >> /etc/hosts.deny
 
 cat <<EOF > /etc/sysconfig/iptables
@@ -73,17 +77,22 @@ EOF
 
 /sbin/service iptables save
 
+echo "checking selinux is enforcing"
 cp /etc/securetty /etc/securetty.bak
 cat /dev/null > /etc/securetty
 setenforce 1
 sestatus
-echo 'HISTTIMEFORMAT="%d/%m/%y  %T  "' >> ¬/.bashrc
-echo ‘PROMPT_COMMAND="history -a"’ >> ¬/.bashrc
-yum install psacct -y
-/etc/init.d/psacct status
 
+echo 'HISTTIMEFORMAT="%d/%m/%y  %T  "' >> ~/.bashrc
+echo ‘PROMPT_COMMAND="history -a"’ >> ~/.bashrc
+
+echo "checking bad permissions"
+find /home -type f -perm 777
+echo "enable auditd"
+systemctl enable auditd.service
 yum -y install aide
 echo "aide --init"
 echo "cp -p /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz"
 echo "aide --check"
 echo "aude --update"
+
