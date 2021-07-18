@@ -10,31 +10,26 @@ If you are interested in doing a security audit of the first release get in touc
 
 ## modules
 
-auditd [ ]
+auditd [x] :: auditd logs
+aide check [ ] :: results from aide --check
+peers [ ] :: connected peers information
+node_info [ ] :: system information
 
 ## development
 
 Run the server & client...
 
 ```sh
-
-node server &
-node client
+npm i
+node ./genConfig.js # generate a CAP
+sudo ./dev.sh
 ```
 
-Run the modules manually...
+In another console run a command as sudo to test 
 
-```sh
+## TODO: before the first release...
 
-cd ./module/auditd
-node index.js &
-sudo ls # become sudo
-./injest.sh & # this will pipe the auditd log to index.js
-
-```
-
-## todo
-
+* test on debian, raspian and centos systems
 * create sandboxed users and groups to run mzek
 * investige chroot and selinux sandbox for running mzek
 * apply limits to the mzek groups
