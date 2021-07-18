@@ -31,6 +31,9 @@ client(function (err, sbot) {
   if (err) throw err
   //sbot.whoami(console.log)
   pull(sbot.createLogStream({ live: true }), pull.drain(function (msg) {
-    if (msg && msg.value && msg.value.hasOwnProperty('content')) console.log(msg.value.content.content.join('\n'))
+    console.log(msg)
+    if (msg && msg.value && msg.value.hasOwnProperty('content')) {
+      console.log(msg.value.author, '__'.repeat(33)+'\n', msg.value.content.content.join('\n'), '__'.repeat(33)+'\n')
+    }
   }))
 })
