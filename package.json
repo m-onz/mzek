@@ -4,7 +4,9 @@
   "description": "hedgehog-demagogue",
   "main": "index.js",
   "bin": {
-    "mzek": "server.js"
+    "mzek-server": "server.js",
+    "mzek-client": "client.js",
+    "mzek": "client.js"
   },
   "dependencies": {
     "scuttle-testbot": "^1.5.2",

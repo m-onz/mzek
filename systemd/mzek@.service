@@ -10,7 +10,7 @@ After=network.target
 
 [Service]
 User=%I
-ExecStart=/usr/bin/env bash -c '. /home/%I/.nvm/nvm.sh; mzek'
+ExecStart=/usr/bin/env bash -c '. /home/%I/.nvm/nvm.sh; mzek-server'
 Restart=always
 RestartSec=30
 

@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
 console.log('<mzek> mzek server.')
 
@@ -15,7 +15,7 @@ var fs = require('fs')
 var path = require('path')
 var crypto = require('crypto')
 var Config = require('ssb-config/inject')
-var mzekNode = require('./modules/node')
+//var mzekNode = require('./modules/node')
 
 // ~/.mzek
 var config = Config('mzek', {
@@ -51,13 +51,13 @@ fs.writeFileSync(
   path.join(config.path, 'manifest.json'),
   JSON.stringify(manifest)
 )
-
+/*
 setTimeout(function () {
   mzekNode(function (e, msg) {
     if (e) throw e;
     console.log('... ', JSON.stringify(msg.value.content, null, 2))
   })
 }, 30000)
-
+*/
 // server.whoami(console.log)
 // pull(server.createLogStream({ live: true }), pull.drain(console.log))
