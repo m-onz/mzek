@@ -26,10 +26,8 @@ Run the modules manually...
 
 ```sh
 
-cd ./module/_auditd
-
+cd ./module/auditd
 node index.js &
-
 sudo ls # become sudo
 ./injest.sh & # this will pipe the auditd log to index.js
 

@@ -10,7 +10,7 @@ After=network.target
 
 [Service]
 User=%I
-ExecStart=/usr/bin/env bash -c '. /home/monz/Desktop/mzek/modules/_auditd/injest.sh'
+ExecStart=/usr/bin/env bash -c '. /home/monz/Desktop/mzek/modules/auditd/injest.sh'
 Restart=always
 RestartSec=30
 
