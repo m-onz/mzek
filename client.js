@@ -27,9 +27,9 @@ client(function (err, sbot) {
 
 // tail all messages
 client(function (err, sbot) {
-  console.log(err)
+  //console.log(err)
   if (err) throw err
-  sbot.whoami(console.log)
+  //sbot.whoami(console.log)
   pull(sbot.createLogStream({ live: true }), pull.drain(function (msg) {
     if (msg && msg.value && msg.value.hasOwnProperty('content')) console.log(msg.value.content.content.join('\n'))
   }))

@@ -19,7 +19,7 @@ client(function (err, sbot) {
   ev.on('auditd', function (msg) {
     // whitelist msg
     var _msg = msg.trim().split('\n')
-    sbot.publish({ type: type, content: _msg }, console.log)
+    sbot.publish({ type: type, content: _msg }, function(){})
   })
 })
 
