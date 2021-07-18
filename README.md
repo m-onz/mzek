@@ -10,10 +10,10 @@ If you are interested in doing a security audit of the first release get in touc
 
 ## modules
 
-auditd [x] :: auditd logs
-aide check [ ] :: results from aide --check
-peers [ ] :: connected peers information
-node_info [ ] :: system information
+* auditd [x] :: auditd logs
+* aide check [ ] :: results from aide --check
+* peers [ ] :: connected peers information
+* node_info [ ] :: system information
 
 ## development
 
