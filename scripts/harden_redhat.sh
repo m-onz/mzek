@@ -17,9 +17,6 @@ chattr +i /etc/services
 chattr +i /etc/passwd
 chattr +i /etc/shadow
 echo "Idle users will be removed after 15 minutes"
-echo "readonly TMOUT=900" >> /etc/profile.d/os-security.sh
-echo "readonly HISTFILE" >> /etc/profile.d/os-security.sh
-chmod +x /etc/profile.d/os-security.sh
 echo "Locking down Cron"
 touch /etc/cron.allow
 chmod 600 /etc/cron.allow
@@ -91,4 +88,3 @@ echo "aide --init"
 echo "cp -p /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz"
 echo "aide --check"
 echo "aude --update"
-
