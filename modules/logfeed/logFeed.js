@@ -9,18 +9,16 @@ function logFeed (type, command) {
   var cmd = command.split(' ')
   var ls = spawn(cmd[0], cmd.slice(1, cmd.length))
   ls.stdout.on('data', function (data) {
-    console.log(data.toString().length)
     ev.emit(type, data.toString())
   })
   ls.stderr.on('data', function (data) {
-    console.log(data.toString().length)
     ev.emit(type, data.toString())
   })
   ls.on('error', function (err) {
-    console.log(err)
+    throw err
   })
   ls.on('close', function (code) {
-    console.log('closed ', code)
+    throw Error('stream closed early')
   })
   client(function (err, sbot) {
     ev.on(type, function (msg) {

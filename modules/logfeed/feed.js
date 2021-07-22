@@ -1,22 +1,21 @@
 
 var pull = require('pull-stream')
-var client = require('../lib/client')
+var client = require('../../lib/client')
 
-/*
-
-live feed of tail -f /var/log/audit/audit.log
-
-*/
-
-var type = 'auditd'
+var input = process.argv.slice(2)
+if (input.length) input = input[0]
+  else throw Error('needs a message type')
+var type = input
 
 client(function (err, sbot) {
-  console.log(err)
   if (err) throw err
   pull(
     sbot.messagesByType({ live: true, reverse: true, type: type }),
     pull.drain(function (msg, _) {
-      if (msg && msg.hasOwnProperty('value')) console.log(msg.value.content.content.join('\n'))
+      console.log(msg, _)
+      // if (msg && msg.hasOwnProperty('value')) {
+      //   console.log(msg.value.content.content.join('\n'))
+      // }
     })
   )
 })
