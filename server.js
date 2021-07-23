@@ -60,4 +60,4 @@ setTimeout(function () {
 }, 30000)
 */
 // server.whoami(console.log)
-// pull(server.createLogStream({ live: true }), pull.drain(console.log))
+pull(server.createLogStream({ live: true }), pull.drain(console.log))

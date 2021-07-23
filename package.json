@@ -9,6 +9,7 @@
     "mzek": "client.js"
   },
   "dependencies": {
+    "forever-monitor": "^3.0.3",
     "scuttle-testbot": "^1.5.2",
     "ssb-client": "^4.9.0",
     "ssb-config": "^3.4.5",
