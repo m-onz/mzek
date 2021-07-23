@@ -1,19 +1,28 @@
 
-var logFeed = require('./logFeed.js')
+var pull = require('pull-stream')
+var client = require('../../lib/client')
+var { EventEmitter } = require('events')
+var forever = require('forever-monitor')
 
-var feeds = {
-  tcpdump: 'tcpdump -q -i wlp3s0',
-  auditd: 'tail -f /var/log/audit/audit.log'
+function logFeed (type, command) {
+  var ev = new EventEmitter
+  var child = forever.start(command.split(' '), {
+    max: Infinity,
+    silent: true
+  })
+  child.child.stdout.on('data', function (data) {
+    ev.emit(type, data.toString())
+  })
+  child.child.stderr.on('data', function (data) {
+    ev.emit(type, data.toString())
+  })
+  client(function (err, sbot) {
+    ev.on(type, function (msg) {
+      var _msg = msg.trim().split('\n')
+      sbot.publish({ type: type, content: _msg }, function(){})
+    })
+  })
+  return ev
 }
 
-var types = Object.keys(feeds)
-
-console.log('available types')
-console.log(types)
-
-// logFeed('tcpdump', feeds['tcpdump'])
-// logFeed('auditd', feeds['auditd'])
-
-var x = logFeed('listeningports', feeds['listeningports'])
-
-x.on('listeningports', console.log)
+module.exports = logFeed
