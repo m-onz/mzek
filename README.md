@@ -1,5 +1,5 @@
 
-# mzek
+# `MzEK`
 
 ## status
 
