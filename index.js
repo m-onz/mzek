@@ -43,7 +43,7 @@ MZeK.prototype.start = function () {
       } catch (e) { reject(e) }
     })
   })
-  return Promise.all([ ...feedKeys, ...tripwireKeys ])
+  return Promise.all([ ...tripwireKeys ])
 }
 
 module.exports = MZeK

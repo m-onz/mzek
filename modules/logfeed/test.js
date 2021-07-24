@@ -14,6 +14,6 @@ console.log(types)
 // logFeed('tcpdump', feeds['tcpdump'])
 // logFeed('auditd', feeds['auditd'])
 
-var x = logFeed('auditd', feeds['auditd'])
+var x = logFeed('tcpdump', feeds['tcpdump'])
 
 //x.on('auditd', console.log)

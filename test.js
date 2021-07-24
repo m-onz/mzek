@@ -18,16 +18,24 @@ allow auditd log to be run as a non-root user:
   sudo chgrp monz -R /var/log/audit/audit
 */
 
+var fs = require('fs')
 var MZeK = require('.')
+
+// setInterval(function () {
+//   fs.appendFileSync('./test_a.log', new Date().toISOString() + '\n')
+//   fs.appendFileSync('./test_b.log', new Date().toISOString() + '\n')
+// }, 5000)
 
 var tripwires = {
   services: 'systemctl list-units --type service --state running --plain',
-  listeningports: 'ss -tulpn'
+  listeningports: 'netstat -lutp'
 }
 
 var logfeeds = {
   tcpdump: 'tcpdump -q -i wlp3s0',
   auditd: 'tail -f /var/log/audit/audit.log'
+  // testa: 'tail -f ./test_a.log',
+  // testb: 'tail -f ./test_b.log'
 }
 
 var m = MZeK({

@@ -7,12 +7,14 @@ var runcmd = require('../../lib/runcmd')
 
 function tripWire (type, command) {
   var ev = new EventEmitter
-  var cmd = command.split(' ')
-  var child = forever.start([ 'watch', '-g' ].concat(command), {
+  var child = forever.start(
+    [ 'watch', '-g' ].concat(command.split(' ')
+  ), {
     max: Infinity,
     silent: true
   })
   child.on('restart', function () {
+    console.log('restarting?')
     runcmd.Exec(command,
       function (e, r) {
         if (e) return cb(e)
