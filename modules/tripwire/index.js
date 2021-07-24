@@ -5,8 +5,9 @@ var { EventEmitter } = require('events')
 var forever = require('forever-monitor')
 var runcmd = require('../../lib/runcmd')
 
-function tripWire (type, command) {
+function tripWire (cap, type, command) {
   var ev = new EventEmitter
+  console.log('command ', [ 'watch', '-g' ].concat(command.split(' ')))
   var child = forever.start(
     [ 'watch', '-g' ].concat(command.split(' ')
   ), {
@@ -21,7 +22,7 @@ function tripWire (type, command) {
         ev.emit(type, r)
       })
   })
-  client(function (err, sbot) {
+  client(cap, function (err, sbot) {
     ev.on(type, function (msg) {
       sbot.publish({ type: type, content: msg }, function(){})
     })

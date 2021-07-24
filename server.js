@@ -5,24 +5,27 @@ console.log('<mzek> mzek server.')
 var os = require('os')
 
 if (os.platform()!=='linux') throw Error(`
-  mzek only currently supports debian linux!
-  sorry!
+  mzek only currently tested on linux
 `);
 
+var DEBUG = false
+var WAIT_TIME = 3000; // wait for the server to spin up
 var Server = require('ssb-server')
 var pull = require('pull-stream')
+var YAML = require('yaml')
 var fs = require('fs')
 var path = require('path')
 var crypto = require('crypto')
 var Config = require('ssb-config/inject')
-//var mzekNode = require('./modules/node')
+var MZeK = require('./lib/mzek')
+
+var file = fs.readFileSync('./mzek.config.yaml', 'utf8')
+var _config = YAML.parse(file)
 
 // ~/.mzek
 var config = Config('mzek', {
   caps: {
-    shs: JSON.parse(
-          fs.readFileSync(__dirname+'/config.json').toString()
-        ).cap
+    shs: _config.ssb.cap
   }
 })
 
@@ -39,8 +42,8 @@ Server
     version: "1.0.1",
     manifest: {},
     init: () => {
-      console.log('... ')
-      console.log(arguments)
+      // console.log('... ')
+      // console.log(arguments)
     }
   })
 
@@ -51,15 +54,21 @@ fs.writeFileSync(
   path.join(config.path, 'manifest.json'),
   JSON.stringify(manifest)
 )
-/*
-setTimeout(function () {
-  mzekNode(function (e, msg) {
-    if (e) throw e;
-    console.log('... ', JSON.stringify(msg.value.content, null, 2))
+
+setTimeout(() => {
+  var file = fs.readFileSync('./mzek.config.yaml', 'utf8')
+  var config = YAML.parse(file)
+  var m = MZeK({
+    tripwires: config.tripwires,
+    logfeeds: config.logfeeds,
+    cap: config.ssb.cap
   })
-}, 30000)
-*/
-// server.whoami(console.log)
-pull(server.createLogStream({ live: true }), pull.drain(function (d) {
-  console.log(JSON.stringify(d, void 0, 2))
-}))
+  m.start().then(console.log).catch(console.log)
+}, WAIT_TIME);
+
+if (DEBUG) {
+  server.whoami(console.log)
+  pull(server.createLogStream({ live: true }), pull.drain(function (d) {
+    console.log(JSON.stringify(d, void 0, 2))
+  }))
+}

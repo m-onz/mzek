@@ -1,39 +1,35 @@
 #!/usr/bin/env node
 
+var fs = require('fs')
 var pull = require('pull-stream')
 var client = require('./lib/client')
+var YAML = require('yaml')
+var argv = require('minimist')(process.argv.slice(2))
+var file = fs.readFileSync('./mzek.config.yaml', 'utf8')
+var config = YAML.parse(file)
 
-/*
-add minimist
-allow filtering by message types
-show all message types
-*/
+var type = 'ALL'
+if (argv.type) type = argv.type
 
-/*
-message by type
-var type = 'auditd'
+if (!config.ssb.cap) throw Error('needs a cap')
 
-client(function (err, sbot) {
-  console.log(err)
-  if (err) throw err
-  pull(
-    sbot.messagesByType({ live: true, reverse: true, type: type }),
-    pull.drain(function (msg, _) {
-      if (msg && msg.hasOwnProperty('value')) console.log(msg.value.content.content.join('\n'))
-    })
-  )
-})
-*/
-
-// tail all messages
-client(function (err, sbot) {
-  //console.log(err)
-  if (err) throw err
-  //sbot.whoami(console.log)
-  pull(sbot.createLogStream({ live: true }), pull.drain(function (msg) {
-    console.log(msg)
-    if (msg && msg.value && msg.value.hasOwnProperty('content')) {
-      console.log(msg.value.author, '__'.repeat(33)+'\n', msg.value.content.content.join('\n'), '__'.repeat(33)+'\n')
-    }
-  }))
-})
+if (type === 'ALL') {
+  client(config.ssb.cap, function (err, sbot) {
+    if (err) throw err
+    pull(
+      sbot.createLogStream({ live: true }),
+      pull.drain(function (msg) {
+        if (msg) console.log(JSON.stringify(msg, void 0, 2))
+    }))
+  })
+} else {
+  client(config.ssb.cap, function (err, sbot) {
+    if (err) throw err
+    pull(
+      sbot.messagesByType({ live: true, reverse: true, type: type }),
+      pull.drain(function (msg, _) {
+        if (msg) console.log(JSON.stringify(msg, void 0, 2))
+      })
+    )
+  })
+}
