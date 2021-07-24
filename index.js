@@ -1,49 +1,40 @@
 
 /*
 
-  MZeK
+run mzek as a non-root user...
 
-  modules:
-    logfeed    ::    A continuous log (tailing a logfile)
-    tripwire   ::    When a command changes (using watch)
+allow tcpdump to be run as a non-root user:
+
+  sudo chown tcpdump:tcpdump /usr/sbin/tcpdump
+  sudo chmod 755 /usr/sbin/tcpdump
+  tcpdump -X
+  ll /usr/sbin/tcpdump
+  sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+  sudo ln -s /usr/sbin/tcpdump /usr/local/bin/tcpdump
+
+allow auditd log to be run as a non-root user:
+
+  sudo chown monz -R /var/log/audit/audit
+  sudo chgrp monz -R /var/log/audit/audit
+
+  todo: delete logs after they have been added
 
 */
 
+var fs = require('fs')
+var MZeK = require('./lib/mzek')
+var fs = require('fs')
+var YAML = require('yaml')
 
-var LogFeed = require('./modules/logfeed')
-var TripWire = require('./modules/tripwire')
+// todo: pass in ssb config here too...
+// if ssb config does not exist generate a CAP
 
-function MZeK (options) {
-  if (! (this instanceof MZeK)) return new MZeK (options)
-  this.logfeed = LogFeed;
-  this.tripwire = TripWire;
-  this.options = options;
-  console.log('<>', this.options)
-}
+var file = fs.readFileSync('./mzek.config.yaml', 'utf8')
+var config = YAML.parse(file)
 
-MZeK.prototype.start = function () {
-  var self = this
-  var feeds = self.options.logfeeds;
-  var tripwires = self.options.tripwires;
-  var feedKeys = Object.keys(self.options.logfeeds) || []
-  var tripwireKeys = Object.keys(self.options.tripwires) || []
-  feedKeys = feedKeys.map(function (k) {
-    return new Promise(function (resolve, reject) {
-      try {
-        var x = self.logfeed(k, self.options.logfeeds[k])
-        resolve(x)
-      } catch (e) { reject(e) }
-    })
-  })
-  tripwireKeys = tripwireKeys.map(function (k) {
-    return new Promise(function (resolve, reject) {
-      try {
-        var y = self.tripwire(k, self.options.tripwires[k])
-        resolve(y)
-      } catch (e) { reject(e) }
-    })
-  })
-  return Promise.all([ ...tripwireKeys ])
-}
+var m = MZeK({
+  tripwires: config.tripwires,
+  logfeeds: config.logfeeds
+})
 
-module.exports = MZeK
+m.start().then(console.log).catch(console.log)

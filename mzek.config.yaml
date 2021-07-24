@@ -1,0 +1,12 @@
+
+# if the output of these commands changes an event will be fired
+
+tripwires:
+  services: systemctl list-units --type service --state running --plain
+  listeningports: netstat -lutp
+
+# these are streams of continuos data
+
+logfeeds:
+  tcpdump: tcpdump -q -i wlp3s0
+  auditd: tail -f /var/log/audit/audit.log

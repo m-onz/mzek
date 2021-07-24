@@ -21,7 +21,8 @@
     "ssb-private1": "^1.0.1",
     "ssb-promiscuous": "^1.1.0",
     "ssb-replicate": "^1.3.3",
-    "ssb-server": "^15.3.0"
+    "ssb-server": "^15.3.0",
+    "yaml": "^1.10.2"
   },
   "repository": {
     "type": "git",

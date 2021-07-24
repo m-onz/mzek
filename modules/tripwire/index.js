@@ -14,7 +14,6 @@ function tripWire (type, command) {
     silent: true
   })
   child.on('restart', function () {
-    console.log('restarting?')
     runcmd.Exec(command,
       function (e, r) {
         if (e) return cb(e)
