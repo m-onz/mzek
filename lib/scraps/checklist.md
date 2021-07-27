@@ -1,3 +1,10 @@
+y
+* https://github.com/carlospolop/hacktricks
+* https://github.com/carlospolop/hacktricks/tree/master/linux-unix/privilege-escalation#escaping-from-restricted-shells
+* https://github.com/threat-hunting/awesome_Threat-Hunting
+* https://github.com/rshipp/awesome-malware-analysis
+* https://github.com/morpheusme/awesome-cybersecurity-blueteam
+* https://osquery.io/downloads/official/4.9.0
 
 # install checklist
 
