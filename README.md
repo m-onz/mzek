@@ -3,17 +3,16 @@
 
 ## about
 
-Highly experimental p2p log monitoring and IDS based on secure scuttlebutt (but not affiliated with ssb). Logs from machines are stored and gossiped amongst connected
- peers to get real time events and resilient backups of logs useful for incident response
- and intrusion detection.
+experimental p2p loghost system build on secure scuttlebutt (ssb)
 
 ## status
 
-in development
+* not ready!
+* under active development
 
 ## modules
 
-Modules are just ssb-clients that append messages to the nodes feed.
+So far modules are just ssb-clients that append messages to the nodes feed.
 
 * logfeed: injest a continous log stream
 * tripwire: get an event if a commands output changes
@@ -41,11 +40,13 @@ logfeeds:
 
 ## notes
 
-I run everything as a non-root user... I make tcpdump and auditd logs accessible from
- my non-root user. If this is not acceptable to you please do not use this.
+For development and testing I'm just making sure not to run as root and
+ this requires allowing a non-root user to use tcpdump and read auditd
+ logs.
 
-I am going to delete the auditd log after its been added to the ssb feed... again
- this might not be what you want!
+I am planning to lock this down using an mzek group that has permissions
+ to do what is needed. This will be limited and possibly run within a chroot
+ jail or selinux jail.
 
 ```sh
 
@@ -63,5 +64,4 @@ I am going to delete the auditd log after its been added to the ssb feed... agai
   sudo chown monz -R /var/log/audit/audit
   sudo chgrp monz -R /var/log/audit/audit
 
-# todo: delete logs after they have been added
 ```
