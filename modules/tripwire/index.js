@@ -7,7 +7,7 @@ var runcmd = require('../../lib/runcmd')
 
 function tripWire (cap, type, command) {
   var ev = new EventEmitter
-  console.log('command ', [ 'watch', '-g' ].concat(command.split(' ')))
+  // console.log('command ', [ 'watch', '-g' ].concat(command.split(' ')))
   var child = forever.start(
     [ 'watch', '-g' ].concat(command.split(' ')
   ), {

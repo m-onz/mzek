@@ -13,6 +13,7 @@
     "event-stream": "^4.0.1",
     "forever-monitor": "^3.0.3",
     "minimist": "^1.2.5",
+    "offline-geo-from-ip": "^1.0.1",
     "scuttle-testbot": "^1.5.2",
     "ssb-client": "^4.9.0",
     "ssb-config": "^3.4.5",
